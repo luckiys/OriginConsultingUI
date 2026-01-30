@@ -626,6 +626,173 @@
       box-shadow:0 12px 32px rgba(245,158,11,.3);
     }
 
+    /* Office Hours Main Section */
+    .office-hours-main{
+      background:rgba(15,23,42,.88);
+      border:2px solid rgba(251,191,36,.4);
+      border-radius:24px;
+      padding:32px;
+      margin:0 0 40px;
+      box-shadow:0 12px 40px rgba(251,191,36,.15);
+    }
+    .office-hours-main-header{
+      margin-bottom:28px;
+    }
+    .office-hours-kicker{
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:2px;
+      color:var(--gold0);
+      margin-bottom:8px;
+      font-weight:900;
+    }
+    .office-hours-main-title{
+      font-family:"DM Sans",sans-serif;
+      font-size:28px;
+      font-weight:900;
+      color:var(--text);
+      margin-bottom:10px;
+    }
+    .office-hours-main-sub{
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.6;
+      max-width:600px;
+    }
+    .office-hours-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+      gap:20px;
+    }
+    .office-hours-card{
+      background:rgba(15,23,42,.9);
+      border:2px solid rgba(139,92,246,.3);
+      border-radius:18px;
+      padding:24px;
+      position:relative;
+      transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+    }
+    .office-hours-card:hover{
+      transform:translateY(-4px);
+      box-shadow:0 12px 32px rgba(139,92,246,.2);
+      border-color:rgba(139,92,246,.5);
+    }
+    .office-hours-card.upcoming{
+      border-color:rgba(251,191,36,.5);
+      background:linear-gradient(135deg, rgba(30,27,75,.7), rgba(161,98,7,.25));
+    }
+    .office-hours-card.upcoming:hover{
+      box-shadow:0 12px 32px rgba(251,191,36,.25);
+      border-color:rgba(251,191,36,.7);
+    }
+    .office-hours-card-badge{
+      position:absolute;
+      top:16px;
+      right:16px;
+      background:linear-gradient(135deg, var(--gold0), var(--gold1));
+      color:#1a202c;
+      font-size:10px;
+      font-weight:900;
+      padding:4px 10px;
+      border-radius:999px;
+      letter-spacing:1px;
+    }
+    .office-hours-card-icon{
+      font-size:36px;
+      margin-bottom:16px;
+    }
+    .office-hours-card-title{
+      font-family:"DM Sans",sans-serif;
+      font-size:18px;
+      font-weight:800;
+      margin-bottom:16px;
+      color:var(--text);
+    }
+    .office-hours-card-details{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      margin-bottom:20px;
+    }
+    .office-hours-card-detail{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-size:14px;
+      color:var(--text-soft);
+    }
+    .detail-icon{
+      font-size:16px;
+    }
+    .office-hours-join-btn{
+      background:linear-gradient(135deg, var(--gold0), var(--gold1));
+      border:2px solid rgba(251,191,36,.7);
+      color:#1a202c;
+      padding:14px 20px;
+      border-radius:12px;
+      cursor:pointer;
+      font-weight:900;
+      font-size:14px;
+      font-family:"DM Sans",sans-serif;
+      width:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      transition:transform .25s ease, box-shadow .25s ease;
+      box-shadow:0 6px 20px rgba(251,191,36,.2);
+    }
+    .office-hours-join-btn:hover{
+      transform:translateY(-2px);
+      box-shadow:0 10px 28px rgba(251,191,36,.3);
+    }
+    .office-hours-join-btn.secondary{
+      background:rgba(139,92,246,.2);
+      border-color:rgba(139,92,246,.5);
+      color:#fff;
+      box-shadow:0 6px 20px rgba(139,92,246,.15);
+    }
+    .office-hours-join-btn.secondary:hover{
+      background:rgba(139,92,246,.3);
+      box-shadow:0 10px 28px rgba(139,92,246,.25);
+    }
+    .recordings-list{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      margin-bottom:20px;
+    }
+    .recording-item{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:12px;
+      background:rgba(0,0,0,.3);
+      border-radius:10px;
+      cursor:pointer;
+      transition:background .2s ease;
+    }
+    .recording-item:hover{
+      background:rgba(139,92,246,.15);
+    }
+    .recording-icon{
+      font-size:18px;
+    }
+    .recording-info{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+    }
+    .recording-title{
+      font-size:14px;
+      font-weight:600;
+      color:var(--text);
+    }
+    .recording-duration{
+      font-size:12px;
+      color:var(--muted);
+    }
+
     /* Reward animation */
     .reward-animation{
       position:fixed;inset:0;
@@ -1046,6 +1213,99 @@
         </div>
       </section>
 
+      <!-- Office Hours Section (Premium Only) -->
+      <section class="office-hours-main" id="officeHoursMain" style="display:none">
+        <div class="office-hours-main-header">
+          <div>
+            <div class="office-hours-kicker">PREMIUM BENEFIT</div>
+            <h2 class="office-hours-main-title">📅 Live Office Hours</h2>
+            <p class="office-hours-main-sub">Join weekly live sessions with the Origin team. Ask questions, get help, and connect with the community.</p>
+          </div>
+        </div>
+        
+        <div class="office-hours-grid">
+          <div class="office-hours-card upcoming">
+            <div class="office-hours-card-badge">UPCOMING</div>
+            <div class="office-hours-card-icon">🎙️</div>
+            <h3 class="office-hours-card-title">Weekly Q&A Session</h3>
+            <div class="office-hours-card-details">
+              <div class="office-hours-card-detail">
+                <span class="detail-icon">📆</span>
+                <span>Thursday, 3:00 PM EST</span>
+              </div>
+              <div class="office-hours-card-detail">
+                <span class="detail-icon">⏱️</span>
+                <span>60 minutes</span>
+              </div>
+              <div class="office-hours-card-detail">
+                <span class="detail-icon">👥</span>
+                <span>Origin Team & Community Leads</span>
+              </div>
+              <div class="office-hours-card-detail">
+                <span class="detail-icon">💬</span>
+                <span>Discord Voice Channel</span>
+              </div>
+            </div>
+            <button class="office-hours-join-btn" onclick="joinOfficeHours()">
+              <span>🔔</span> Set Reminder & Join
+            </button>
+          </div>
+
+          <div class="office-hours-card">
+            <div class="office-hours-card-icon">🎓</div>
+            <h3 class="office-hours-card-title">OETH Deep Dive</h3>
+            <div class="office-hours-card-details">
+              <div class="office-hours-card-detail">
+                <span class="detail-icon">📆</span>
+                <span>Saturday, 11:00 AM EST</span>
+              </div>
+              <div class="office-hours-card-detail">
+                <span class="detail-icon">⏱️</span>
+                <span>45 minutes</span>
+              </div>
+              <div class="office-hours-card-detail">
+                <span class="detail-icon">📚</span>
+                <span>Technical walkthrough</span>
+              </div>
+            </div>
+            <button class="office-hours-join-btn secondary" onclick="joinOfficeHours()">
+              <span>📅</span> Add to Calendar
+            </button>
+          </div>
+
+          <div class="office-hours-card recordings">
+            <div class="office-hours-card-icon">📹</div>
+            <h3 class="office-hours-card-title">Past Recordings</h3>
+            <div class="recordings-list">
+              <div class="recording-item" onclick="playRecording('intro')">
+                <span class="recording-icon">▶️</span>
+                <div class="recording-info">
+                  <span class="recording-title">Introduction to OETH</span>
+                  <span class="recording-duration">42 min</span>
+                </div>
+              </div>
+              <div class="recording-item" onclick="playRecording('yield')">
+                <span class="recording-icon">▶️</span>
+                <div class="recording-info">
+                  <span class="recording-title">Understanding Yield</span>
+                  <span class="recording-duration">38 min</span>
+                </div>
+              </div>
+              <div class="recording-item" onclick="playRecording('wallet')">
+                <span class="recording-icon">▶️</span>
+                <div class="recording-info">
+                  <span class="recording-title">Wallet Setup Guide</span>
+                  <span class="recording-duration">25 min</span>
+                </div>
+              </div>
+            </div>
+            <button class="office-hours-join-btn secondary" onclick="viewAllRecordings()">
+              View All Recordings →
+            </button>
+          </div>
+        </div>
+      </section>
+
       <div class="module-detail" id="moduleDetail">
         <div class="detail-header">
           <button class="back-button" onclick="closeModuleDetail()">← Back to Modules</button>
@@ -1170,6 +1430,7 @@
             trackBadge.textContent = '⭐ You are on Premium Track';
             trackBadge.className = 'track-status-badge premium';
           }
+          updateOfficeHoursVisibility();
         } else {
           btn.classList.remove('purchased');
           btn.textContent = 'Upgrade to Premium — $2.99';
@@ -1541,6 +1802,30 @@
         alert('🚀 Build with OETH!\n\n• Integrate OETH yield into your DeFi app\n• Accept OETH payments in your dApp\n• Build yield-bearing NFT projects\n• Create OETH staking dashboards\n• Develop portfolio tracking tools\n\nVisit docs.origin.com for developer resources!');
       }
 
+      function joinOfficeHours() {
+        alert('🔔 Reminder Set!\n\nYou will receive a notification before the session starts.\n\nJoin us on Discord Voice Channel when the session begins.');
+      }
+
+      function playRecording(id) {
+        const recordings = {
+          'intro': 'Introduction to OETH - 42 min',
+          'yield': 'Understanding Yield - 38 min',
+          'wallet': 'Wallet Setup Guide - 25 min'
+        };
+        alert('▶️ Now Playing:\n\n' + recordings[id] + '\n\n(In production, this would open a video player)');
+      }
+
+      function viewAllRecordings() {
+        alert('📹 Past Recordings Library\n\n• Introduction to OETH (42 min)\n• Understanding Yield (38 min)\n• Wallet Setup Guide (25 min)\n• DeFi Basics (55 min)\n• Advanced Staking (40 min)\n• Community AMA #1 (90 min)\n\n(In production, this would open a recordings library)');
+      }
+
+      function updateOfficeHoursVisibility() {
+        const officeHoursSection = document.getElementById('officeHoursMain');
+        if (officeHoursSection) {
+          officeHoursSection.style.display = hasPremium ? 'block' : 'none';
+        }
+      }
+
       // Initialize everything
       function init() {
         const cert = document.getElementById('certificateModal');
@@ -1562,6 +1847,7 @@
         renderBattlePass();
         updateProgress();
         updateMarkAllButton();
+        updateOfficeHoursVisibility();
         
         // Ensure track status badge is initialized
         const trackBadge = document.getElementById('trackStatusBadge');
