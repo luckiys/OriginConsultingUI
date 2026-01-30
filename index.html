@@ -1040,7 +1040,7 @@
         <div class="battle-pass-rows" id="battlePassRows"></div>
         
         <div style="margin-top:28px;display:flex;justify-content:center">
-          <button class="mark-all-complete-btn" onclick="markAllComplete()">
+          <button class="mark-all-complete-btn" id="markAllBtn" onclick="toggleAllModules()">
             ✓ Mark All Modules as Complete
           </button>
         </div>
@@ -1405,6 +1405,18 @@
         });
       }
 
+      function toggleAllModules() {
+        const allCompleted = claimedModules.size === modules.length;
+        
+        if (allCompleted) {
+          // Unmark all modules
+          unmarkAllModules();
+        } else {
+          // Mark all modules as complete
+          markAllComplete();
+        }
+      }
+
       function markAllComplete() {
         // Mark all modules as complete
         modules.forEach(m => {
@@ -1420,6 +1432,7 @@
         // Update UI
         updateProgress();
         renderBattlePass();
+        updateMarkAllButton();
         
         // Show appropriate completion screen
         if (hasPremium) {
@@ -1428,6 +1441,41 @@
         } else {
           // Free users get the summary modal
           showCompletionSummary(false);
+        }
+      }
+
+      function unmarkAllModules() {
+        // Reset all modules
+        modules.forEach(m => {
+          m.lessonsCompleted = m.lessonsCompleted.map(() => false);
+        });
+        claimedModules.clear();
+        
+        // Reset OETH
+        totalOETH = 0;
+        completedCount = 0;
+        certificateShown = false;
+        
+        // Update UI
+        updateProgress();
+        renderBattlePass();
+        updateMarkAllButton();
+      }
+
+      function updateMarkAllButton() {
+        const btn = document.getElementById('markAllBtn');
+        if (!btn) return;
+        
+        const allCompleted = claimedModules.size === modules.length;
+        
+        if (allCompleted) {
+          btn.textContent = '↺ Unmark All Modules as Complete';
+          btn.style.background = 'linear-gradient(135deg, #ef4444, #dc2626)';
+          btn.style.borderColor = 'rgba(239, 68, 68, 0.7)';
+        } else {
+          btn.textContent = '✓ Mark All Modules as Complete';
+          btn.style.background = '';
+          btn.style.borderColor = '';
         }
       }
 
@@ -1513,6 +1561,7 @@
         updatePremiumUI();
         renderBattlePass();
         updateProgress();
+        updateMarkAllButton();
         
         // Ensure track status badge is initialized
         const trackBadge = document.getElementById('trackStatusBadge');
