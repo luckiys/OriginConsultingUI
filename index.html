@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>OETH Course</title>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <style>
     :root{
       --bg0:#050510;
@@ -74,6 +75,278 @@
     @keyframes bgShift{
       0%,100%{opacity:1}
       50%{opacity:.85}
+    }
+
+    /* Floating Particles */
+    .particles{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      z-index:0;
+      overflow:hidden;
+    }
+    .particle{
+      position:absolute;
+      width:6px;
+      height:6px;
+      background:rgba(139,92,246,.6);
+      border-radius:50%;
+      animation:float 15s infinite ease-in-out;
+      box-shadow:0 0 10px rgba(139,92,246,.4);
+    }
+    .particle:nth-child(2){animation-delay:-2s;left:10%;background:rgba(99,102,241,.5)}
+    .particle:nth-child(3){animation-delay:-4s;left:20%;width:8px;height:8px}
+    .particle:nth-child(4){animation-delay:-6s;left:30%;background:rgba(251,191,36,.4)}
+    .particle:nth-child(5){animation-delay:-8s;left:40%}
+    .particle:nth-child(6){animation-delay:-10s;left:50%;width:4px;height:4px}
+    .particle:nth-child(7){animation-delay:-12s;left:60%;background:rgba(16,185,129,.5)}
+    .particle:nth-child(8){animation-delay:-14s;left:70%}
+    .particle:nth-child(9){animation-delay:-3s;left:80%;width:10px;height:10px;background:rgba(251,191,36,.3)}
+    .particle:nth-child(10){animation-delay:-7s;left:90%}
+    @keyframes float{
+      0%,100%{transform:translateY(100vh) rotate(0deg);opacity:0}
+      10%{opacity:1}
+      90%{opacity:1}
+      100%{transform:translateY(-100vh) rotate(720deg);opacity:0}
+    }
+
+    /* Glow pulse animation */
+    @keyframes glowPulse{
+      0%,100%{box-shadow:0 0 20px rgba(139,92,246,.3)}
+      50%{box-shadow:0 0 40px rgba(139,92,246,.6)}
+    }
+    @keyframes goldGlowPulse{
+      0%,100%{box-shadow:0 0 20px rgba(251,191,36,.3)}
+      50%{box-shadow:0 0 40px rgba(251,191,36,.6)}
+    }
+
+    /* Streak Banner */
+    .streak-banner{
+      background:linear-gradient(90deg, rgba(251,191,36,.15), rgba(245,158,11,.1), rgba(251,191,36,.15));
+      border:1px solid rgba(251,191,36,.3);
+      border-radius:16px;
+      padding:16px 24px;
+      margin-bottom:24px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:20px;
+      flex-wrap:wrap;
+      animation:goldGlowPulse 3s ease-in-out infinite;
+    }
+    .streak-info{display:flex;align-items:center;gap:16px}
+    .streak-flame{font-size:32px;animation:flameBounce 1s ease-in-out infinite}
+    @keyframes flameBounce{
+      0%,100%{transform:scale(1)}
+      50%{transform:scale(1.1)}
+    }
+    .streak-text h4{font-family:"DM Sans",sans-serif;font-size:18px;font-weight:800;color:var(--gold0);margin-bottom:4px}
+    .streak-text p{font-size:13px;color:var(--text-soft)}
+    .streak-bonus{
+      background:linear-gradient(135deg, var(--gold0), var(--gold1));
+      color:#1a202c;
+      padding:10px 20px;
+      border-radius:12px;
+      font-weight:900;
+      font-size:14px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      cursor:pointer;
+      transition:transform .2s ease;
+    }
+    .streak-bonus:hover{transform:scale(1.05)}
+
+    /* Achievement Badges */
+    .achievements-bar{
+      display:flex;
+      gap:12px;
+      margin-bottom:24px;
+      overflow-x:auto;
+      padding:8px 4px;
+      scrollbar-width:none;
+    }
+    .achievements-bar::-webkit-scrollbar{display:none}
+    .achievement{
+      min-width:80px;
+      padding:12px;
+      background:rgba(15,23,42,.8);
+      border:2px solid rgba(139,92,246,.3);
+      border-radius:14px;
+      text-align:center;
+      transition:all .3s ease;
+      cursor:pointer;
+    }
+    .achievement:hover{
+      transform:translateY(-4px);
+      border-color:rgba(139,92,246,.6);
+      box-shadow:0 8px 24px rgba(139,92,246,.2);
+    }
+    .achievement.unlocked{
+      border-color:rgba(251,191,36,.6);
+      background:linear-gradient(135deg, rgba(30,27,75,.6), rgba(161,98,7,.2));
+    }
+    .achievement.unlocked:hover{
+      box-shadow:0 8px 24px rgba(251,191,36,.3);
+    }
+    .achievement-icon{font-size:28px;margin-bottom:6px;display:block}
+    .achievement-name{font-size:10px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px}
+    .achievement.locked .achievement-icon{filter:grayscale(1);opacity:.4}
+
+    /* Leaderboard Mini */
+    .leaderboard-mini{
+      background:rgba(15,23,42,.85);
+      border:2px solid rgba(139,92,246,.3);
+      border-radius:20px;
+      padding:24px;
+      margin-bottom:24px;
+    }
+    .leaderboard-header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:16px;
+    }
+    .leaderboard-title{
+      font-family:"DM Sans",sans-serif;
+      font-size:18px;
+      font-weight:800;
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    .leaderboard-see-all{
+      font-size:13px;
+      color:var(--violet-light);
+      cursor:pointer;
+      transition:color .2s ease;
+    }
+    .leaderboard-see-all:hover{color:#fff}
+    .leaderboard-list{display:flex;flex-direction:column;gap:10px}
+    .leaderboard-item{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:12px 16px;
+      background:rgba(0,0,0,.3);
+      border-radius:12px;
+      transition:background .2s ease;
+    }
+    .leaderboard-item:hover{background:rgba(139,92,246,.1)}
+    .leaderboard-item.you{
+      background:rgba(139,92,246,.15);
+      border:1px solid rgba(139,92,246,.4);
+    }
+    .leaderboard-rank{
+      width:28px;
+      height:28px;
+      border-radius:8px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:900;
+      font-size:12px;
+    }
+    .leaderboard-rank.gold{background:linear-gradient(135deg, var(--gold0), var(--gold1));color:#1a202c}
+    .leaderboard-rank.silver{background:linear-gradient(135deg, #c0c0c0, #a8a8a8);color:#1a202c}
+    .leaderboard-rank.bronze{background:linear-gradient(135deg, #cd7f32, #b8723a);color:#1a202c}
+    .leaderboard-rank.normal{background:rgba(139,92,246,.2);color:var(--text-soft)}
+    .leaderboard-avatar{
+      width:36px;
+      height:36px;
+      border-radius:10px;
+      background:linear-gradient(135deg, var(--violet), var(--blue));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:16px;
+    }
+    .leaderboard-name{flex:1;font-weight:600;font-size:14px}
+    .leaderboard-oeth{font-weight:800;font-size:13px;color:var(--violet-light)}
+
+    /* Share buttons */
+    .share-section{
+      display:flex;
+      gap:10px;
+      margin-top:16px;
+    }
+    .share-btn{
+      flex:1;
+      padding:12px;
+      border-radius:12px;
+      border:2px solid rgba(139,92,246,.3);
+      background:rgba(139,92,246,.1);
+      color:#fff;
+      font-weight:700;
+      font-size:13px;
+      cursor:pointer;
+      transition:all .2s ease;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+    }
+    .share-btn:hover{
+      background:rgba(139,92,246,.25);
+      border-color:rgba(139,92,246,.5);
+      transform:translateY(-2px);
+    }
+    .share-btn.twitter{border-color:rgba(29,161,242,.4);background:rgba(29,161,242,.1)}
+    .share-btn.twitter:hover{background:rgba(29,161,242,.25);border-color:rgba(29,161,242,.6)}
+
+    /* Animated counter */
+    .counter-animate{
+      display:inline-block;
+      transition:transform .3s ease;
+    }
+    .counter-animate.bump{
+      animation:counterBump .3s ease;
+    }
+    @keyframes counterBump{
+      0%{transform:scale(1)}
+      50%{transform:scale(1.3)}
+      100%{transform:scale(1)}
+    }
+
+    /* Card shine effect */
+    .bp-card::before{
+      content:"";
+      position:absolute;
+      top:0;
+      left:-100%;
+      width:100%;
+      height:100%;
+      background:linear-gradient(90deg, transparent, rgba(255,255,255,.1), transparent);
+      transition:left .5s ease;
+    }
+    .bp-card:hover::before{
+      left:100%;
+    }
+
+    /* Tooltip */
+    .tooltip{
+      position:relative;
+    }
+    .tooltip::after{
+      content:attr(data-tooltip);
+      position:absolute;
+      bottom:100%;
+      left:50%;
+      transform:translateX(-50%);
+      padding:8px 12px;
+      background:rgba(0,0,0,.9);
+      color:#fff;
+      font-size:12px;
+      border-radius:8px;
+      white-space:nowrap;
+      opacity:0;
+      pointer-events:none;
+      transition:opacity .2s ease, transform .2s ease;
+      z-index:100;
+    }
+    .tooltip:hover::after{
+      opacity:1;
+      transform:translateX(-50%) translateY(-4px);
     }
 
     .header{
@@ -1111,6 +1384,20 @@
   </style>
   </head>
   <body>
+    <!-- Floating Particles -->
+    <div class="particles">
+      <div class="particle" style="left:5%"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+    </div>
+
     <div class="header">
       <div class="header-left">
         <img src="download.png" alt="Origin Ether" class="logo-img">
@@ -1150,6 +1437,91 @@
           <span style="font-size:14px;color:var(--muted)">
             Total Earned: <strong id="totalOethDisplay" style="color:var(--violet-light)">0 OETH</strong>
           </span>
+        </div>
+      </div>
+
+      <!-- Streak Banner -->
+      <div class="streak-banner" id="streakBanner">
+        <div class="streak-info">
+          <span class="streak-flame">🔥</span>
+          <div class="streak-text">
+            <h4><span id="streakCount">1</span> Day Streak!</h4>
+            <p>Keep learning daily to earn bonus OETH</p>
+          </div>
+        </div>
+        <div class="streak-bonus" onclick="claimDailyBonus()">
+          <span>🎁</span>
+          <span id="dailyBonusText">Claim Daily Bonus</span>
+        </div>
+      </div>
+
+      <!-- Achievement Badges -->
+      <div class="achievements-bar" id="achievementsBar">
+        <div class="achievement unlocked tooltip" data-tooltip="Started your journey!">
+          <span class="achievement-icon">🚀</span>
+          <span class="achievement-name">First Step</span>
+        </div>
+        <div class="achievement locked tooltip" data-tooltip="Complete 1 module">
+          <span class="achievement-icon">📚</span>
+          <span class="achievement-name">Scholar</span>
+        </div>
+        <div class="achievement locked tooltip" data-tooltip="Complete 4 modules">
+          <span class="achievement-icon">⚡</span>
+          <span class="achievement-name">Fast Learner</span>
+        </div>
+        <div class="achievement locked tooltip" data-tooltip="Complete all modules">
+          <span class="achievement-icon">🎓</span>
+          <span class="achievement-name">Graduate</span>
+        </div>
+        <div class="achievement locked tooltip" data-tooltip="Upgrade to Premium">
+          <span class="achievement-icon">⭐</span>
+          <span class="achievement-name">Premium</span>
+        </div>
+        <div class="achievement locked tooltip" data-tooltip="7 day streak">
+          <span class="achievement-icon">🔥</span>
+          <span class="achievement-name">On Fire</span>
+        </div>
+        <div class="achievement locked tooltip" data-tooltip="Share on Twitter">
+          <span class="achievement-icon">📢</span>
+          <span class="achievement-name">Evangelist</span>
+        </div>
+        <div class="achievement locked tooltip" data-tooltip="Earn 0.001 OETH">
+          <span class="achievement-icon">💰</span>
+          <span class="achievement-name">Collector</span>
+        </div>
+      </div>
+
+      <!-- Mini Leaderboard -->
+      <div class="leaderboard-mini">
+        <div class="leaderboard-header">
+          <div class="leaderboard-title">🏆 Top Learners This Week</div>
+          <span class="leaderboard-see-all" onclick="showFullLeaderboard()">See All →</span>
+        </div>
+        <div class="leaderboard-list">
+          <div class="leaderboard-item">
+            <div class="leaderboard-rank gold">1</div>
+            <div class="leaderboard-avatar">🦊</div>
+            <div class="leaderboard-name">CryptoKing</div>
+            <div class="leaderboard-oeth">0.0089 OETH</div>
+          </div>
+          <div class="leaderboard-item">
+            <div class="leaderboard-rank silver">2</div>
+            <div class="leaderboard-avatar">🐸</div>
+            <div class="leaderboard-name">DefiDegen</div>
+            <div class="leaderboard-oeth">0.0076 OETH</div>
+          </div>
+          <div class="leaderboard-item">
+            <div class="leaderboard-rank bronze">3</div>
+            <div class="leaderboard-avatar">🦁</div>
+            <div class="leaderboard-name">YieldHunter</div>
+            <div class="leaderboard-oeth">0.0054 OETH</div>
+          </div>
+          <div class="leaderboard-item you">
+            <div class="leaderboard-rank normal" id="yourRank">47</div>
+            <div class="leaderboard-avatar">😎</div>
+            <div class="leaderboard-name">You</div>
+            <div class="leaderboard-oeth" id="yourLeaderboardOeth">0.0000 OETH</div>
+          </div>
         </div>
       </div>
 
@@ -1359,6 +1731,14 @@
         <button class="build-oeth-btn" onclick="showBuildInfo()">
           🚀 See What You Can Build with OETH
         </button>
+        <div class="share-section">
+          <button class="share-btn twitter" onclick="shareOnTwitter()">
+            <span>𝕏</span> Share on Twitter
+          </button>
+          <button class="share-btn" onclick="copyShareLink()">
+            <span>🔗</span> Copy Link
+          </button>
+        </div>
         <button class="completion-close-btn" onclick="closeCompletionSummary()">Continue</button>
       </div>
     </div>
@@ -1390,6 +1770,160 @@
       // Generate random reward between 0.0001 and 0.0003
       function randomReward() {
         return (Math.random() * (0.0003 - 0.0001) + 0.0001).toFixed(4);
+      }
+
+      // Streak System
+      let currentStreak = 1;
+      let dailyBonusClaimed = false;
+
+      function updateStreakDisplay() {
+        document.getElementById('streakCount').textContent = currentStreak;
+        const bonusBtn = document.getElementById('dailyBonusText');
+        if (dailyBonusClaimed) {
+          bonusBtn.textContent = '✓ Claimed Today';
+          bonusBtn.parentElement.style.opacity = '0.6';
+          bonusBtn.parentElement.style.cursor = 'default';
+        }
+      }
+
+      function claimDailyBonus() {
+        if (dailyBonusClaimed) return;
+        dailyBonusClaimed = true;
+        const bonus = 0.0001;
+        totalOETH += bonus;
+        currentStreak++;
+        
+        // Confetti!
+        if (typeof confetti !== 'undefined') {
+          confetti({
+            particleCount: 100,
+            spread: 70,
+            origin: { y: 0.6 },
+            colors: ['#fbbf24', '#8b5cf6', '#6366f1']
+          });
+        }
+        
+        updateStreakDisplay();
+        updateProgress();
+        updateAchievements();
+        
+        // Animate the OETH counter
+        animateCounter('oethBalance');
+        
+        alert('🎁 Daily Bonus Claimed!\n\n+0.0001 OETH added to your balance!\n\nStreak increased to ' + currentStreak + ' days!');
+      }
+
+      // Achievement System
+      function updateAchievements() {
+        const achievements = document.querySelectorAll('.achievement');
+        const completedModules = claimedModules.size;
+        
+        // Scholar - Complete 1 module
+        if (completedModules >= 1) unlockAchievement(1);
+        // Fast Learner - Complete 4 modules
+        if (completedModules >= 4) unlockAchievement(2);
+        // Graduate - Complete all modules
+        if (completedModules >= 8) unlockAchievement(3);
+        // Premium
+        if (hasPremium) unlockAchievement(4);
+        // On Fire - 7 day streak
+        if (currentStreak >= 7) unlockAchievement(5);
+        // Collector - Earn 0.001 OETH
+        if (totalOETH >= 0.001) unlockAchievement(7);
+      }
+
+      function unlockAchievement(index) {
+        const achievements = document.querySelectorAll('.achievement');
+        if (achievements[index] && achievements[index].classList.contains('locked')) {
+          achievements[index].classList.remove('locked');
+          achievements[index].classList.add('unlocked');
+          
+          // Mini confetti for achievement
+          if (typeof confetti !== 'undefined') {
+            confetti({
+              particleCount: 50,
+              spread: 60,
+              origin: { y: 0.7 },
+              colors: ['#fbbf24', '#8b5cf6']
+            });
+          }
+        }
+      }
+
+      // Animated counter
+      function animateCounter(elementId) {
+        const el = document.getElementById(elementId);
+        if (el) {
+          el.classList.add('counter-animate', 'bump');
+          setTimeout(() => el.classList.remove('bump'), 300);
+        }
+      }
+
+      // Confetti celebration
+      function celebrateCompletion() {
+        if (typeof confetti !== 'undefined') {
+          // Big confetti burst
+          const duration = 3000;
+          const end = Date.now() + duration;
+          
+          const frame = () => {
+            confetti({
+              particleCount: 3,
+              angle: 60,
+              spread: 55,
+              origin: { x: 0 },
+              colors: ['#fbbf24', '#8b5cf6', '#6366f1', '#10b981']
+            });
+            confetti({
+              particleCount: 3,
+              angle: 120,
+              spread: 55,
+              origin: { x: 1 },
+              colors: ['#fbbf24', '#8b5cf6', '#6366f1', '#10b981']
+            });
+            
+            if (Date.now() < end) {
+              requestAnimationFrame(frame);
+            }
+          };
+          frame();
+        }
+      }
+
+      // Share functionality
+      function shareOnTwitter() {
+        const text = `🎓 I'm learning about OETH and earning rewards on the Origin Protocol course! Join me and start earning crypto while you learn. #OETH #Origin #DeFi`;
+        const url = 'https://originprotocol.com';
+        window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
+        
+        // Unlock evangelist achievement
+        unlockAchievement(6);
+      }
+
+      function copyShareLink() {
+        navigator.clipboard.writeText('https://originprotocol.com/oeth-course').then(() => {
+          alert('🔗 Link copied to clipboard!');
+        });
+      }
+
+      // Leaderboard
+      function showFullLeaderboard() {
+        alert('🏆 Full Leaderboard\n\n1. CryptoKing - 0.0089 OETH\n2. DefiDegen - 0.0076 OETH\n3. YieldHunter - 0.0054 OETH\n4. StakeMaster - 0.0048 OETH\n5. EthMaxi - 0.0041 OETH\n...\n47. You - ' + totalOETH.toFixed(4) + ' OETH\n\n(In production, this would show a full leaderboard)');
+      }
+
+      function updateLeaderboard() {
+        const yourOeth = document.getElementById('yourLeaderboardOeth');
+        const yourRank = document.getElementById('yourRank');
+        if (yourOeth) yourOeth.textContent = totalOETH.toFixed(4) + ' OETH';
+        
+        // Update rank based on OETH
+        if (yourRank) {
+          if (totalOETH >= 0.005) yourRank.textContent = '4';
+          else if (totalOETH >= 0.003) yourRank.textContent = '12';
+          else if (totalOETH >= 0.001) yourRank.textContent = '28';
+          else if (totalOETH > 0) yourRank.textContent = '35';
+          else yourRank.textContent = '47';
+        }
       }
       
       const modules = [
@@ -1452,6 +1986,17 @@
           hasPremium = true;
           updatePremiumUI();
           renderBattlePass();
+          updateAchievements();
+          
+          // Confetti for premium!
+          if (typeof confetti !== 'undefined') {
+            confetti({
+              particleCount: 150,
+              spread: 100,
+              origin: { y: 0.6 },
+              colors: ['#fbbf24', '#f59e0b', '#d97706']
+            });
+          }
         }
       }
 
@@ -1610,15 +2155,29 @@
         document.getElementById('rewardAmount').textContent = `+${reward.toFixed(4)} OETH`;
         document.getElementById('rewardAnimation').classList.add('show');
 
+        // Confetti for module completion
+        if (typeof confetti !== 'undefined') {
+          confetti({
+            particleCount: 100,
+            spread: 70,
+            origin: { y: 0.6 },
+            colors: ['#fbbf24', '#8b5cf6', '#6366f1']
+          });
+        }
+
         setTimeout(() => {
           document.getElementById('rewardAnimation').classList.remove('show');
           closeModuleDetail();
           updateProgress();
           renderBattlePass();
+          updateAchievements();
+          updateLeaderboard();
+          animateCounter('oethBalance');
 
           // Check for certificate (all 8 modules completed)
           if (hasPremium && claimedModules.size === 8 && !certificateShown) {
             certificateShown = true;
+            celebrateCompletion();
             setTimeout(() => showCertificate(), 500);
           }
         }, 2500);
@@ -1694,6 +2253,11 @@
         updateProgress();
         renderBattlePass();
         updateMarkAllButton();
+        updateAchievements();
+        updateLeaderboard();
+        
+        // Big celebration!
+        celebrateCompletion();
         
         // Show appropriate completion screen
         if (hasPremium) {
@@ -1857,6 +2421,9 @@
         updateProgress();
         updateMarkAllButton();
         updateOfficeHoursVisibility();
+        updateStreakDisplay();
+        updateAchievements();
+        updateLeaderboard();
         
         // Ensure track status badge is initialized
         const trackBadge = document.getElementById('trackStatusBadge');
