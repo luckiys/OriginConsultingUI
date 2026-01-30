@@ -789,6 +789,147 @@
       transform: translateY(-2px);
     }
 
+    /* Mark All Complete Button */
+    .mark-all-complete-btn{
+      background:linear-gradient(135deg, var(--violet-dark), var(--violet));
+      border:2px solid rgba(139,92,246,.7);
+      color:#fff;
+      padding:18px 36px;border-radius:16px;
+      cursor:pointer;font-weight:900;font-size:16px;
+      font-family:"DM Sans",sans-serif;
+      transition: transform .25s ease, box-shadow .25s ease;
+      box-shadow:0 8px 28px rgba(139,92,246,.3);
+    }
+    .mark-all-complete-btn:hover{
+      transform: translateY(-3px);
+      box-shadow:0 12px 40px rgba(139,92,246,.4);
+    }
+
+    /* Completion Summary Modal */
+    .completion-summary-modal{
+      position:fixed;inset:0;
+      background:rgba(0,0,0,.95);
+      z-index:2000;
+      display:none;
+      align-items:center;justify-content:center;
+    }
+    .completion-summary-modal.show{display:flex;animation:fadeInFull .3s ease}
+    .completion-summary-content{
+      background:rgba(15,23,42,.95);
+      border:2px solid rgba(139,92,246,.6);
+      border-radius:24px;
+      padding:48px;
+      max-width:560px;
+      width:92%;
+      text-align:center;
+      box-shadow:0 20px 60px rgba(0,0,0,.5);
+      animation: certificateAppear .5s ease;
+    }
+    .completion-summary-content.premium-complete{
+      border-color:rgba(251,191,36,.7);
+    }
+    .completion-icon{
+      width:100px;height:100px;
+      margin:0 auto 24px;
+      border-radius:50%;
+      display:flex;align-items:center;justify-content:center;
+      font-size:48px;
+      background:linear-gradient(135deg, rgba(139,92,246,.3), rgba(99,102,241,.2));
+      border:3px solid rgba(139,92,246,.6);
+      animation:pulse 2s ease-in-out infinite;
+    }
+    .completion-icon.premium{
+      background:linear-gradient(135deg, rgba(251,191,36,.3), rgba(245,158,11,.2));
+      border-color:rgba(251,191,36,.7);
+    }
+    .completion-title{
+      font-family:"DM Sans",sans-serif;
+      font-size:32px;font-weight:900;
+      margin-bottom:16px;
+      background:linear-gradient(135deg, var(--violet-light), var(--blue-light));
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+    .completion-title.premium{
+      background:linear-gradient(135deg, var(--gold0), var(--gold1));
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+    }
+    .completion-earned{
+      background:rgba(0,0,0,.4);
+      border-radius:16px;
+      padding:24px;
+      margin:24px 0;
+    }
+    .completion-earned-label{
+      font-size:14px;color:var(--muted);margin-bottom:8px;
+    }
+    .completion-earned-amount{
+      font-family:"DM Sans",sans-serif;
+      font-size:42px;font-weight:900;
+      color:var(--violet-light);
+    }
+    .completion-earned-amount.premium{
+      color:var(--gold0);
+    }
+    .completion-message{
+      color:var(--text-soft);
+      font-size:16px;line-height:1.7;
+      margin-bottom:24px;
+    }
+    .completion-track-badge{
+      display:inline-block;
+      padding:10px 20px;
+      border-radius:999px;
+      font-weight:900;
+      font-size:14px;
+      margin-bottom:24px;
+    }
+    .completion-track-badge.free{
+      background:rgba(139,92,246,.2);
+      border:2px solid rgba(139,92,246,.5);
+      color:var(--violet-light);
+    }
+    .completion-track-badge.premium{
+      background:linear-gradient(135deg, var(--gold0), var(--gold1));
+      border:2px solid rgba(251,191,36,.8);
+      color:#1a202c;
+    }
+    .build-oeth-btn{
+      background:linear-gradient(135deg, #10b981, #059669);
+      border:2px solid rgba(16,185,129,.7);
+      color:#fff;
+      padding:16px 32px;border-radius:14px;
+      cursor:pointer;font-weight:900;font-size:15px;
+      font-family:"DM Sans",sans-serif;
+      width:100%;
+      margin-top:12px;
+      transition: transform .25s ease, box-shadow .25s ease;
+      box-shadow:0 8px 24px rgba(16,185,129,.2);
+    }
+    .build-oeth-btn:hover{
+      transform: translateY(-2px);
+      box-shadow:0 12px 32px rgba(16,185,129,.3);
+    }
+    .completion-close-btn{
+      background:rgba(139,92,246,.2);
+      border:2px solid rgba(139,92,246,.5);
+      color:#fff;
+      padding:14px 32px;
+      border-radius:14px;
+      cursor:pointer;
+      font-weight:800;
+      font-size:16px;
+      transition:transform .25s ease, background .25s ease;
+      margin-top:16px;
+    }
+    .completion-close-btn:hover{
+      background:rgba(139,92,246,.35);
+      transform:translateY(-2px);
+    }
+
     @media (max-width: 900px){
       .header{padding:10px 18px}
       .logo-img{height:92px;margin-left:-8px}
@@ -897,6 +1038,12 @@
           </div>
         </div>
         <div class="battle-pass-rows" id="battlePassRows"></div>
+        
+        <div style="margin-top:28px;display:flex;justify-content:center">
+          <button class="mark-all-complete-btn" onclick="markAllComplete()">
+            ✓ Mark All Modules as Complete
+          </button>
+        </div>
       </section>
 
       <div class="module-detail" id="moduleDetail">
@@ -933,6 +1080,26 @@
           <div class="upgrade-modal-benefit">$1,000 OETH giveaway entry</div>
         </div>
         <button class="upgrade-modal-close" onclick="closeUpgradeModal()">Got it</button>
+      </div>
+    </div>
+
+    <!-- Completion Summary Modal -->
+    <div class="completion-summary-modal" id="completionSummaryModal">
+      <div class="completion-summary-content" id="completionSummaryContent">
+        <div class="completion-icon" id="completionIcon">🎉</div>
+        <h2 class="completion-title" id="completionTitle">Course Complete!</h2>
+        <div class="completion-track-badge" id="completionTrackBadge">Free Track</div>
+        <div class="completion-earned">
+          <div class="completion-earned-label">Total OETH Earned</div>
+          <div class="completion-earned-amount" id="completionEarnedAmount">0.0000 OETH</div>
+        </div>
+        <p class="completion-message" id="completionMessage">
+          Congratulations on completing the OETH Course! You've learned the fundamentals of crypto and earned OETH rewards.
+        </p>
+        <button class="build-oeth-btn" onclick="showBuildInfo()">
+          🚀 See What You Can Build with OETH
+        </button>
+        <button class="completion-close-btn" onclick="closeCompletionSummary()">Continue</button>
       </div>
     </div>
 
@@ -1236,6 +1403,94 @@
         navigator.clipboard.writeText(badgeUrl).then(() => {
           alert('LinkedIn badge link copied to clipboard!');
         });
+      }
+
+      function markAllComplete() {
+        // Mark all modules as complete
+        modules.forEach(m => {
+          m.lessonsCompleted = m.lessonsCompleted.map(() => true);
+          claimedModules.add(m.id);
+        });
+        
+        // Calculate total OETH earned
+        const rewardMultiplier = hasPremium ? 2 : 1;
+        totalOETH = modules.reduce((sum, m) => sum + (m.reward * rewardMultiplier), 0);
+        completedCount = modules.length;
+        
+        // Update UI
+        updateProgress();
+        renderBattlePass();
+        
+        // Show appropriate completion screen
+        if (hasPremium) {
+          // Premium users get the certificate
+          showCompletionSummary(true);
+        } else {
+          // Free users get the summary modal
+          showCompletionSummary(false);
+        }
+      }
+
+      function showCompletionSummary(isPremium) {
+        const modal = document.getElementById('completionSummaryModal');
+        const content = document.getElementById('completionSummaryContent');
+        const icon = document.getElementById('completionIcon');
+        const title = document.getElementById('completionTitle');
+        const badge = document.getElementById('completionTrackBadge');
+        const amount = document.getElementById('completionEarnedAmount');
+        const message = document.getElementById('completionMessage');
+        
+        if (isPremium) {
+          content.classList.add('premium-complete');
+          icon.classList.add('premium');
+          icon.textContent = '🏆';
+          title.classList.add('premium');
+          title.textContent = 'Course Complete!';
+          badge.className = 'completion-track-badge premium';
+          badge.textContent = '⭐ Premium Track';
+          amount.classList.add('premium');
+          amount.textContent = totalOETH.toFixed(4) + ' OETH';
+          message.innerHTML = `
+            Congratulations on completing the OETH Course with Premium Track! 
+            You've earned <strong>2× rewards</strong> and unlocked your official certificate of completion. 
+            Your LinkedIn badge is ready to share!
+          `;
+        } else {
+          content.classList.remove('premium-complete');
+          icon.classList.remove('premium');
+          icon.textContent = '🎉';
+          title.classList.remove('premium');
+          title.textContent = 'Course Complete!';
+          badge.className = 'completion-track-badge free';
+          badge.textContent = 'Free Track';
+          amount.classList.remove('premium');
+          amount.textContent = totalOETH.toFixed(4) + ' OETH';
+          message.innerHTML = `
+            Congratulations on completing the OETH Course! You've learned the fundamentals of crypto and earned OETH rewards.
+            <br><br>
+            <strong>💡 Upgrade to Premium</strong> to get 2× rewards, an official certificate, LinkedIn badge, and priority for future airdrops!
+          `;
+        }
+        
+        modal.classList.add('show');
+        
+        // If premium, also show certificate after closing summary
+        if (isPremium && !certificateShown) {
+          certificateShown = true;
+        }
+      }
+
+      function closeCompletionSummary() {
+        document.getElementById('completionSummaryModal').classList.remove('show');
+        
+        // If premium, show certificate
+        if (hasPremium && certificateShown) {
+          setTimeout(() => showCertificate(), 300);
+        }
+      }
+
+      function showBuildInfo() {
+        alert('🚀 Build with OETH!\n\n• Integrate OETH yield into your DeFi app\n• Accept OETH payments in your dApp\n• Build yield-bearing NFT projects\n• Create OETH staking dashboards\n• Develop portfolio tracking tools\n\nVisit docs.origin.com for developer resources!');
       }
 
       // Initialize everything
