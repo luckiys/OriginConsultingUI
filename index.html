@@ -1201,7 +1201,7 @@
           <h2 class="battle-pass-title" style="flex:1;min-width:200px">Protocol Pass</h2>
           <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
             <span class="battle-pass-pill" id="battlePassPremiumPill">Premium Track: $2.99 — Extra Rewards</span>
-            <span class="track-status-badge free" id="trackStatusBadge">You are on Free Track</span>
+            <span class="track-status-badge free" id="trackStatusBadge" onclick="togglePremiumDemo()" style="cursor:pointer" title="Click to toggle (demo)">You are on Free Track</span>
           </div>
         </div>
         <div class="battle-pass-rows" id="battlePassRows"></div>
@@ -1387,9 +1387,9 @@
     </div>
 
     <script>
-      // Generate random reward between 0.007 and 0.1
+      // Generate random reward between 0.0001 and 0.0003
       function randomReward() {
-        return (Math.random() * (0.1 - 0.007) + 0.007).toFixed(4);
+        return (Math.random() * (0.0003 - 0.0001) + 0.0001).toFixed(4);
       }
       
       const modules = [
@@ -1824,6 +1824,15 @@
         if (officeHoursSection) {
           officeHoursSection.style.display = hasPremium ? 'block' : 'none';
         }
+      }
+
+      // Hidden demo feature: toggle between premium and free track
+      function togglePremiumDemo() {
+        hasPremium = !hasPremium;
+        updatePremiumUI();
+        renderBattlePass();
+        updateMarkAllButton();
+        updateOfficeHoursVisibility();
       }
 
       // Initialize everything
